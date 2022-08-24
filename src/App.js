@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
+  Route,
+} from "react-router-dom";
+import { Navbar } from "./components";
+import { Home, LogIn, LogUp } from "./containers";
 
-function App() {
+const AuthRoute = ({ isLogged }) => (
+  <Route path="/dashboard">
+    {isLogged ? (
+      <>
+        <h6>Dashboard</h6>
+        {/* <Dashboard /> */}
+      </>
+    ) : (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    )}
+  </Route>
+);
+
+function App(props) {
+  const { isLogged } = props;
+  console.log(isLogged)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="principal-container">
+        <Navbar 
+        isLogged ={isLogged}
+        />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/log-in">
+            <LogIn />
+          </Route>
+          <Route path="/log-up">
+            <LogUp />
+          </Route>
+          <AuthRoute isLogged={isLogged} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
-export default App;
+const mapStateToProps = ({ account }) => ({
+  isLogged: account.isLogged,
+});
+
+export default connect(mapStateToProps)(App);
+/**  */
