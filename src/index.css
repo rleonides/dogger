@@ -50,7 +50,7 @@ body {
 }
 
 .insetShadow{
-	box-shadow: inset 0px 3px 5px 0px rgba(0,0,0,0.3);
+	box-shadow: inset 0px 3px 5px 0px #D6DD70;
 }
 
 *::-webkit-scrollbar {

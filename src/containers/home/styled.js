@@ -34,7 +34,7 @@ export const Title = styled.h3`
   ${({align}) => `text-align: ${align};`}
 `
 
-export const TitleContainer = styled.h3`
+export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

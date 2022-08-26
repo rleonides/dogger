@@ -23,6 +23,7 @@ const Home = () => {
         <Paragraph>Dogger es una plataforma donde dueños de perros pueden contactar con personas dispuestas a pasear a sus lomitos.</Paragraph>
       </TextContainer>
     </Container>
+    
   )
 }
 

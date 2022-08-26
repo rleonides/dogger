@@ -8,11 +8,13 @@ import {
   Logo,
   Title,
   TitleContainer
-} from './styled'
+} from './styled' 
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+import {Redirect} from "react-router-dom";
 
 const Navbar = (props) => {
-  const { isLogged } = props
-  console.log(isLogged)
+  const { isLogged, newLogUp, logOut } = props
+  //console.log(isLogged)
   return (
     <Container>
       <TitleContainer>
@@ -23,11 +25,11 @@ const Navbar = (props) => {
           </Title>
         </Link>
       </TitleContainer>
-      { !isLogged &&
+      { !isLogged?
         (
           <ButtonsContainer>
             <Link to="/log-up">
-              <Button>
+              <Button onPress={()=>newLogUp({type:'REGISTERED', payload: false})}>
                 Registrarse
               </Button>
             </Link>
@@ -37,8 +39,18 @@ const Navbar = (props) => {
               </Button>
             </Link>
           </ButtonsContainer>
+        ):(
+          <div><RiLogoutBoxRLine className='text-2xl hover:text-3xl animation hover:text-[#5C5F30] font-bold hover:cursor-pointer text-[#D6DD70]'
+           onClick={()=>logOut({type:'LOG_OUT'})}/></div>
         )
       }
+         {!isLogged && (
+        <Redirect
+          to={{
+            pathname: "/",
+          }}
+        />
+      ) }
     </Container>
   )
 }
@@ -47,4 +59,10 @@ const mapStateToProps = ({ account }) => ({
   isLogged: account.isLogged
 })
 
-export default connect(mapStateToProps)(Navbar)
+function mapDispatchToProps(dispatch) {
+  return {
+    newLogUp:dispatch,
+    logOut:dispatch
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Navbar)

@@ -7,7 +7,7 @@ import {
   Route,
 } from "react-router-dom";
 import { Navbar } from "./components";
-import { Home, LogIn, LogUp } from "./containers";
+import { Home, LogIn, LogUp, Dashboard } from "./containers";
 
 const AuthRoute = ({ isLogged }) => (
   <Route path="/dashboard">
@@ -26,9 +26,8 @@ const AuthRoute = ({ isLogged }) => (
   </Route>
 );
 
-function App(props) {
-  const { isLogged } = props;
-  console.log(isLogged)
+function App({account}) {
+  const { isLogged} = account;
   return (
     <Router>
       <div className="principal-container">
@@ -43,9 +42,11 @@ function App(props) {
             <LogIn />
           </Route>
           <Route path="/log-up">
-            <LogUp />
+            <LogUp/>
           </Route>
-          <AuthRoute isLogged={isLogged} />
+          <Route path="/dashboard">
+            <Dashboard/>
+          </Route>
         </Switch>
       </div>
     </Router>
@@ -53,7 +54,7 @@ function App(props) {
 }
 
 const mapStateToProps = ({ account }) => ({
-  isLogged: account.isLogged,
+  account,
 });
 
 export default connect(mapStateToProps)(App);
